@@ -21,6 +21,7 @@ $url = "viewPic.php?openID=" . $openID . "&" . "whichPic=" . ($whichPic+1);
 	<style>
 
 html {
+	height: 100%;
   background: url(img/bg.png) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -29,6 +30,7 @@ html {
 }
 
 body{
+	height:100%;
 	min-height: 100%;
 	padding: 0;
 	margin: 0;
@@ -132,11 +134,34 @@ box-sizing:initial;
 	text-align: center;
 }
 
+#done{
+	color: white; 
+	opacity: 0.9; 
+	background: #aaaaaa;
+	position: fixed;
+	top:0;
+    width: 100%;
+    display: none;
+}
+
 </style>
 
 </head>
 
 <body onload="shit();">
+
+
+
+<div id="done">
+	<img id="meToo" src="img/meToo.png" style="width:200px; margin-bottom:16px;" class="imgCenter">
+	<img src="img/downloadApp.png" style="width:200px;" class="imgCenter">
+</div>
+
+
+
+
+
+<div id="mainStuff">
 
 <div style="margin-top:14px;">
 	<div class="dian30"></div>
@@ -173,7 +198,7 @@ box-sizing:initial;
 		<div id="preview">
 			<!--
 			<img id="mainImg" src="<?php echo "upload/" . $whichPic . ".jpg"; ?>" class="imgFit" />
-		-->
+			-->
 		</div>
 		<img id="next1" src="img/next.png" style="float:right; width:65px; height:65px;" onClick="next();">
 
@@ -185,22 +210,17 @@ box-sizing:initial;
 
 
 
+<div id="content" style="margin-top:-40px;">
+	<div id="click"></div>
+</div>	
 
 
 
+</div><!--mainStuff-->
 
 
-
-		<div id="content" style="margin-top:-40px;">
-			<!--
-			<div id="click-demo" class="session">点击评分:</div>
-		-->
-			<div id="click"></div>
-		</div>	
-
-
-<div style="height:58px;"></div>
-<div id="footer">
+<div style="height:50px;"></div>
+<div id="footer" style="height:50px;">
   <img src="img/bottom.png" class="img-responsive imgCenter">    
 </div>
 
@@ -230,6 +250,18 @@ box-sizing:initial;
 
 $(document).ready(function(){
 
+	//alert($(window).height());
+	//alert($(window).width());
+	//alert(document.body.clientWidth);
+
+	//alert(document.body.clientHeight + " " + $('#footer').height());
+	$('#done').css("height", (document.body.clientHeight - $('#footer').height()) + "px");
+	//alert($('#done').height());
+
+	$('#meToo').css("margin-top", $(window).height()*0.41 + "px");
+	//$('#done').css("display", "block");
+	
+
 	$('#preview').height($('#preview').width()*1.2);
 	$('#next1').css({"position":"relative", "top":"-60px"});
 
@@ -238,7 +270,14 @@ $(document).ready(function(){
 
 function next()
 {
+	/*
 window.location.href="<?php echo $url?>"; 
+*/
+
+    $('#mainStuff').css('z-index', '-1');
+    $('#done').css('display','block');
+    $('#done').css('z-index','1');
+
 }
 </script>
 
