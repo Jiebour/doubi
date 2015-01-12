@@ -34,17 +34,12 @@ body{
 	min-height: 100%;
 	padding: 0;
 	margin: 0;
+	color:#787878;
 }
 
 
 /*图片预览区域CSS*/
-		#preview2 {
-			width: 100%;
-			height:300px;
-			border:1px solid gray;
-			line-height: 300px;
-			text-align: center;
-		}
+
 
 #preview {
 	width: 100%;
@@ -54,14 +49,18 @@ body{
     background-repeat: no-repeat;
     text-align: center;
 }
+
+#preview2 {
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+}
+
 /*隐藏file input*/
 		#file {
 			display: none;
 		}
-		.imgResponsive{
-			width: 100%;
-			height: auto;
-		}
+
 		.imgFit{
 			max-width: 100%;
     		max-height: 100%;
@@ -196,9 +195,10 @@ box-sizing:initial;
 
 <!-- 图片预览区域 -->
 		<div id="preview">
-			<!--
-			<img id="mainImg" src="<?php echo "upload/" . $whichPic . ".jpg"; ?>" class="imgFit" />
-			-->
+			<div id="paddingDiv"><br>2014最壕的一天</div>
+			<div id="preview2">
+				<img id="mainImg" src="<?php echo "upload/" . $whichPic . ".jpg"; ?>" class="imgFit" />
+			</div>
 		</div>
 		<img id="next1" src="img/next.png" style="float:right; width:65px; height:65px;" onClick="next();">
 
@@ -209,7 +209,7 @@ box-sizing:initial;
 </div><!-- /page -->
 
 
-
+<!--星星-->
 <div id="content" style="margin-top:-40px;">
 	<div id="click"></div>
 </div>	
@@ -219,6 +219,8 @@ box-sizing:initial;
 </div><!--mainStuff-->
 
 
+
+<!--底部-->
 <div style="height:50px;"></div>
 <div id="footer" style="height:50px;">
   <img src="img/bottom.png" class="img-responsive imgCenter">    
@@ -253,30 +255,39 @@ $(document).ready(function(){
 	//alert($(window).height());
 	//alert($(window).width());
 	//alert(document.body.clientWidth);
-
 	//alert(document.body.clientHeight + " " + $('#footer').height());
+
+
 	$('#done').css("height", (document.body.clientHeight - $('#footer').height()) + "px");
-	//alert($('#done').height());
-
 	$('#meToo').css("margin-top", $(window).height()*0.41 + "px");
-	//$('#done').css("display", "block");
 	
+	var preW = $('#preview').width();
+	$('#preview').height(preW*1.2);
+	$('#preview2').width(preW*0.8);
+	$('#preview2').height(preW*0.8);
+	$('#paddingDiv').css("height", preW*0.2);
 
-	$('#preview').height($('#preview').width()*1.2);
+
+
 	$('#next1').css({"position":"relative", "top":"-60px"});
+
+
+
 
 	$("#dot" + "<?php echo $whichPic; ?>").css("background", "#000000");
 });
 
 function next()
 {
-	/*
-window.location.href="<?php echo $url?>"; 
-*/
 
+window.location.href="<?php echo $url?>"; 
+
+
+/*
     $('#mainStuff').css('z-index', '-1');
     $('#done').css('display','block');
     $('#done').css('z-index','1');
+    */
 
 }
 </script>
