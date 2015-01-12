@@ -153,6 +153,12 @@ box-sizing:initial;
     display: none;
 }
 
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
 </style>
 
 </head>
@@ -210,6 +216,10 @@ box-sizing:initial;
 				<img id="mainImg" src="<?php echo "upload/" . $whichPic . ".jpg"; ?>" class="imgFit" />
 			</div>
 		</div>
+		<!--下面这个div放的是评论的标签图片-->
+		<div id="comment" style="display:none;"></div>
+
+		<!--This is the "next" button(in image) should be restyle-->
 		<img id="next1" src="img/next.png" style="float:right; width:65px; height:65px;" onClick="next();">
 
 	<div style="clear:both;"></div>
@@ -266,8 +276,7 @@ $(document).ready(function(){
 	//alert($(window).width());
 	//alert(document.body.clientWidth);
 	//alert(document.body.clientHeight + " " + $('#footer').height());
-
-	alert(document.body.clientHeight);
+	//alert(document.body.clientHeight);
 
 	$('#done').css("height", (document.body.clientHeight - $('#footer').height()) + "px");
 	$('#meToo').css("margin-top", $(window).height()*0.41 + "px");
