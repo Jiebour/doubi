@@ -1,6 +1,16 @@
 <?php 
 $openID = $_GET["openID"];
 $whichPic = $_GET["whichPic"];
+$end = false;
+
+if($whichPic >= 4){
+	$end = true;
+	$next1 = "img/done.png";
+}
+else{
+	$end = false;
+	$next1 = "img/next.png";
+}
 
 $url = "viewPic.php?openID=" . $openID . "&" . "whichPic=" . ($whichPic+1);
 ?>
@@ -257,6 +267,7 @@ $(document).ready(function(){
 	//alert(document.body.clientWidth);
 	//alert(document.body.clientHeight + " " + $('#footer').height());
 
+	alert(document.body.clientHeight);
 
 	$('#done').css("height", (document.body.clientHeight - $('#footer').height()) + "px");
 	$('#meToo').css("margin-top", $(window).height()*0.41 + "px");
@@ -275,6 +286,11 @@ $(document).ready(function(){
 
 
 	$("#dot" + "<?php echo $whichPic; ?>").css("background", "#000000");
+
+	var end = "<?php echo $end; ?>";
+	//alert(done);
+
+	$("#next1").attr("src", "<?php echo $next1; ?>");
 });
 
 function next()
