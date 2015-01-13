@@ -159,6 +159,13 @@ box-sizing:initial;
     vertical-align: middle;
 }
 
+#comment{
+	width: 70%;
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+}
+
 </style>
 
 </head>
@@ -217,7 +224,9 @@ box-sizing:initial;
 			</div>
 		</div>
 		<!--下面这个div放的是评论的标签图片-->
-		<div id="comment" style="display:none;"></div>
+		<div id="comment" style="display:none;">
+			<img class="imgRes" src="img/label.png">
+		</div>
 
 		<!--This is the "next" button(in image) should be restyle-->
 		<img id="next1" src="img/next.png" style="float:right; width:65px; height:65px;" onClick="next();">
@@ -230,7 +239,7 @@ box-sizing:initial;
 
 
 <!--星星-->
-<div id="content" style="margin-top:-40px;">
+<div id="content" style="margin-top:-40px; display:none;">
 	<div id="click"></div>
 </div>	
 
@@ -251,18 +260,20 @@ box-sizing:initial;
 			$(function() {
 				$('#click').raty({
 					click: function(score, evt) {
-						alert('ID: ' + $(this).attr('id') + '\nscore: ' + score + '\nevent: ' + evt);
+						//alert('ID: ' + $(this).attr('id') + '\nscore: ' + score + '\nevent: ' + evt);
+						$('#comment').css({"position":"fixed", "top":preBottom, "display":"block", "z-index":"9"});
 					}
 				});
 			});
 
+			var preBottom = 0;
 			function shit(){
-			$('#click img').css({"width":"15%"});
-			//alert($("#preview").offset.top);
-			//$("#wrap").css({"position":"relative", "top":"-20px", "right":""});
-			//$("#wrap").css("top", ($("#preview").offset().top + 275) + "px");
 
-			//alert($("#preview").offset().top + $("#preview").height());
+			preBottom = $('#preview').offset().top + $('#preview').height() - 65;
+			alert(preBottom);
+			$('#click img').css({"width":"15%", "margin":"0 2% 0 2%"});
+			$('#content').css({"display":"block"});
+			
 		}
 		</script>
 
