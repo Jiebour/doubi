@@ -1,6 +1,8 @@
 <?php 
-$openID = $_GET["openID"];
+//$openID = $_GET["openID"];
 $whichPic = $_GET["whichPic"];
+$access_token = $_GET["access_token"];
+
 $end = false;
 
 if($whichPic >= 4){
@@ -12,7 +14,7 @@ else{
 	$next1 = "img/next.png";
 }
 
-$url = "viewPic.php?openID=" . $openID . "&" . "whichPic=" . ($whichPic+1);
+$url = "viewPic.php?access_token=" . $access_token . "&" . "whichPic=" . ($whichPic+1);
 ?>
 
 
@@ -218,7 +220,7 @@ box-sizing:initial;
 
 <!-- 图片预览区域 -->
 		<div id="preview">
-			<div id="paddingDiv"><br>2014最壕的一天</div>
+			<div id="paddingDiv">2014最壕的一天</div>
 			<div id="preview2">
 				<img id="mainImg" src="<?php echo "upload/" . $whichPic . ".jpg"; ?>" class="imgFit" />
 			</div>
@@ -256,12 +258,22 @@ box-sizing:initial;
 </div>
 
 
-		<script type="text/javascript">
+<script type="text/javascript">
+
+var sco = 0;
+var end = "<?php echo $end; ?>";
+var access_token = "<?php echo $access_token; ?>";
+var whichPic = "<?php echo $whichPic; ?>";
+
+
+
 			$(function() {
 				$('#click').raty({
 					click: function(score, evt) {
 						//alert('ID: ' + $(this).attr('id') + '\nscore: ' + score + '\nevent: ' + evt);
-						$('#comment').css({"position":"fixed", "top":preBottom, "display":"block", "z-index":"9"});
+						$('#comment').css({"position":"fixed", "top":preBottom, "display":"block", "z-index":"3"});
+
+						sco = score;
 					}
 				});
 			});
@@ -270,24 +282,13 @@ box-sizing:initial;
 			function shit(){
 
 			preBottom = $('#preview').offset().top + $('#preview').height() - 65;
-			alert(preBottom);
+			//alert(preBottom);
 			$('#click img').css({"width":"15%", "margin":"0 2% 0 2%"});
 			$('#content').css({"display":"block"});
-			
 		}
-		</script>
 
-
-
-<script type="text/javascript">
 
 $(document).ready(function(){
-
-	//alert($(window).height());
-	//alert($(window).width());
-	//alert(document.body.clientWidth);
-	//alert(document.body.clientHeight + " " + $('#footer').height());
-	//alert(document.body.clientHeight);
 
 	$('#done').css("height", (document.body.clientHeight - $('#footer').height()) + "px");
 	$('#meToo').css("margin-top", $(window).height()*0.41 + "px");
@@ -296,19 +297,14 @@ $(document).ready(function(){
 	$('#preview').height(preW*1.2);
 	$('#preview2').width(preW*0.8);
 	$('#preview2').height(preW*0.8);
-	$('#paddingDiv').css("height", preW*0.2);
+	$('#paddingDiv').css({"height":preW*0.2, "line-height":preW*0.24 + "px"});
 
 
 
 	$('#next1').css({"position":"relative", "top":"-60px"});
 
-
-
-
 	$("#dot" + "<?php echo $whichPic; ?>").css("background", "#000000");
 
-	var end = "<?php echo $end; ?>";
-	//alert(done);
 
 	$("#next1").attr("src", "<?php echo $next1; ?>");
 });
@@ -316,15 +312,46 @@ $(document).ready(function(){
 function next()
 {
 
-window.location.href="<?php echo $url?>"; 
 
+if(sco == 0){alert("先打个分呗：）"); return;}
 
-/*
+if(end == true){
     $('#mainStuff').css('z-index', '-1');
     $('#done').css('display','block');
-    $('#done').css('z-index','1');
-    */
+    $('#done').css('z-index','9');
+    return;	
+}
 
+
+window.location.href="<?php echo $url?>";
+
+}
+
+
+
+
+
+function sendScore(score){
+	$.ajax({
+		type: 'POST',
+		url: '接受评分结果的PHP页面.php',
+		data: {"score":score, "access_token":access_token, "whichPic":whichPic},
+		dataType:'json',
+		beforeSend:function(){
+
+		},
+		success:function(json){
+
+		},
+		complete:function(){ //生成分页条
+
+
+
+		},
+		error:function(){
+			alert("数据加载失败");
+		}
+	});
 }
 </script>
 
